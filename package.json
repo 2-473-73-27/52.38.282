@@ -1,0 +1,23 @@
+{
+  "name": "sair-otp-dashboard",
+  "version": "1.0.0",
+  "description": "SA!R Automated 10-OTP & Note Dispatcher using MoceanAPI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "npx nodemon server.js"
+  },
+  "keywords": [
+    "sair",
+    "moceanapi",
+    "sms",
+    "otp",
+    "dashboard"
+  ],
+  "author": "SA!R",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
