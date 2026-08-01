@@ -1,0 +1,481 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>AstraSMS | Sign in</title>
+        <link rel="icon" href="/img/favicon.png" type="image/png">
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lg-ink: #0f172a;
+            --lg-muted: #64748b;
+            --lg-line: #e2e8f0;
+            --lg-field: #f8fafc;
+            --lg-accent: #0284c7;
+            --lg-accent-2: #0ea5e9;
+            --lg-font: "Plus Jakarta Sans", system-ui, sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body { height: 100%; }
+
+        body {
+            font-family: var(--lg-font);
+            color: var(--lg-ink);
+            background: #e8f4fc;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        .login-shell {
+            position: relative;
+            isolation: isolate;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding:
+                max(32px, env(safe-area-inset-top))
+                max(20px, env(safe-area-inset-right))
+                max(32px, env(safe-area-inset-bottom))
+                max(20px, env(safe-area-inset-left));
+            overflow: hidden;
+            background:
+                radial-gradient(1200px 520px at 50% -8%, rgba(56, 189, 248, 0.35), transparent 58%),
+                radial-gradient(700px 480px at 8% 88%, rgba(125, 211, 252, 0.35), transparent 55%),
+                radial-gradient(640px 420px at 92% 78%, rgba(14, 165, 233, 0.22), transparent 52%),
+                linear-gradient(180deg, #dbeafe 0%, #eff6ff 38%, #f8fafc 100%);
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: .55;
+        }
+
+        .blob-a {
+            width: 220px;
+            height: 220px;
+            background: #7dd3fc;
+            top: 12%;
+            left: 8%;
+            animation: lg-float 10s ease-in-out infinite alternate;
+        }
+
+        .blob-b {
+            width: 180px;
+            height: 180px;
+            background: #bae6fd;
+            bottom: 14%;
+            right: 10%;
+            animation: lg-float 12s ease-in-out infinite alternate-reverse;
+        }
+
+        .login-wrap {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 440px;
+            animation: lg-rise .55s ease-out both;
+        }
+
+        .login-card {
+            position: relative;
+            padding: 36px 36px 28px;
+            background: #fff;
+            border: 1px solid rgba(226, 232, 240, 0.95);
+            border-radius: 20px;
+            box-shadow:
+                0 1px 2px rgba(15, 23, 42, 0.04),
+                0 12px 28px rgba(2, 132, 199, 0.08),
+                0 28px 56px rgba(15, 23, 42, 0.06);
+        }
+
+        .login-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .form-logo {
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .form-logo-img {
+            display: block;
+            height: auto;
+            max-height: 72px;
+            width: auto;
+            max-width: min(260px, 100%);
+            margin: 0 auto;
+            object-fit: contain;
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+
+        .form-logo-text {
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: var(--lg-ink);
+            line-height: 1.1;
+        }
+
+        .form-logo.has-img .form-logo-text { display: none; }
+        .form-logo-text .accent { color: var(--lg-accent); }
+
+        .form-welcome {
+            margin-bottom: 26px;
+            text-align: center;
+        }
+
+        .form-welcome h1 {
+            font-size: 1.625rem;
+            font-weight: 800;
+            letter-spacing: -0.035em;
+            color: var(--lg-accent);
+            margin-bottom: 6px;
+            line-height: 1.15;
+        }
+
+        .form-welcome p {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--lg-muted);
+            line-height: 1.4;
+        }
+
+        .form-alert {
+            margin-bottom: 16px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            font-size: 0.875rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .form-field { margin-bottom: 14px; }
+
+        .form-field label {
+            display: block;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 7px;
+        }
+
+        .field-shell {
+            position: relative;
+        }
+
+        .field-shell svg {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: #94a3b8;
+            pointer-events: none;
+        }
+
+        .form-field input[type="text"],
+        .form-field input[type="password"] {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px 0 42px;
+            font: inherit;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--lg-ink);
+            background: var(--lg-field);
+            border: 1px solid var(--lg-line);
+            border-radius: 12px;
+            outline: none;
+            transition: border-color .15s, box-shadow .15s, background .15s;
+        }
+
+        .form-field input::placeholder { color: #94a3b8; font-weight: 400; }
+
+        .form-field input:hover {
+            border-color: #cbd5e1;
+            background: #fff;
+        }
+
+        .form-field input:focus {
+            border-color: var(--lg-accent-2);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.14);
+        }
+
+        .form-field input:focus + svg,
+        .field-shell:focus-within svg {
+            color: var(--lg-accent);
+        }
+
+        .form-captcha { margin-bottom: 22px; }
+
+        .form-captcha > label {
+            display: block;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 7px;
+        }
+
+        .captcha-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            min-height: 48px;
+            padding: 0 14px;
+            border: 1px solid var(--lg-line);
+            border-radius: 12px;
+            background: linear-gradient(180deg, #f8fafc, #f1f5f9);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .captcha-row strong {
+            color: var(--lg-accent);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .captcha-row input {
+            width: 92px;
+            height: 36px;
+            margin-left: auto;
+            padding: 0 10px;
+            font: inherit;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            background: #fff;
+            color: var(--lg-ink);
+            outline: none;
+            appearance: textfield;
+            -moz-appearance: textfield;
+        }
+
+        .captcha-row input:focus {
+            border-color: var(--lg-accent-2);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.14);
+        }
+
+        .captcha-row input::-webkit-outer-spin-button,
+        .captcha-row input::-webkit-inner-spin-button {
+            appearance: none;
+            margin: 0;
+        }
+
+        .form-submit {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            color: #fff;
+            font: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            cursor: pointer;
+            box-shadow: 0 10px 24px rgba(2, 132, 199, 0.28);
+            transition: filter .15s, box-shadow .15s, transform .1s;
+        }
+
+        .form-submit:hover {
+            filter: brightness(1.04);
+            box-shadow: 0 12px 28px rgba(2, 132, 199, 0.34);
+        }
+
+        .form-submit:active { transform: translateY(1px); }
+
+        .form-foot {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #94a3b8;
+        }
+
+        .form-foot svg {
+            width: 14px;
+            height: 14px;
+            color: #94a3b8;
+            flex-shrink: 0;
+        }
+
+        @keyframes lg-rise {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes lg-float {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(12px, -16px, 0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .login-wrap,
+            .blob-a,
+            .blob-b { animation: none !important; }
+        }
+
+        @media (max-width: 540px) {
+            .login-shell {
+                justify-content: flex-start;
+                padding-top: max(24px, env(safe-area-inset-top));
+                padding-bottom: max(24px, env(safe-area-inset-bottom));
+            }
+
+            .blob { display: none; }
+
+            .login-wrap {
+                margin: auto 0;
+                max-width: 100%;
+            }
+
+            .login-card {
+                padding: 28px 20px 24px;
+                border-radius: 18px;
+                box-shadow:
+                    0 1px 2px rgba(15, 23, 42, 0.04),
+                    0 10px 28px rgba(2, 132, 199, 0.08);
+            }
+
+            .form-logo-img { max-height: 64px; }
+            .form-logo-text { font-size: 1.5rem; }
+            .form-welcome h1 { font-size: 1.4375rem; }
+
+            .form-field input[type="text"],
+            .form-field input[type="password"],
+            .captcha-row input {
+                font-size: 16px;
+            }
+
+            .form-field input[type="text"],
+            .form-field input[type="password"] {
+                height: 50px;
+                background: #fff;
+            }
+
+            .captcha-row {
+                padding: 10px 12px;
+                background: #fff;
+            }
+
+            .captcha-row input {
+                height: 42px;
+                width: 96px;
+            }
+
+            .form-submit { height: 52px; }
+        }
+
+        @media (max-width: 380px) {
+            .login-card { padding-left: 16px; padding-right: 16px; }
+
+            .captcha-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .captcha-row input {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-shell">
+        <div class="blob blob-a" aria-hidden="true"></div>
+        <div class="blob blob-b" aria-hidden="true"></div>
+
+        <div class="login-wrap">
+            <main class="login-card" aria-label="Sign in">
+                <div class="form-logo has-img">
+                                            <img src="/img/login-logo.png?v=1784960226" alt="AstraSMS" class="form-logo-img" onerror="this.style.display='none';var t=this.parentNode&&this.parentNode.querySelector('.form-logo-text');if(t)t.style.display='block';this.parentNode&&this.parentNode.classList.remove('has-img')">
+                                        <div class="form-logo-text"><span class="accent">A</span>straSMS</div>
+                </div>
+
+                <header class="form-welcome">
+                    <h1>Welcome back!</h1>
+                    <p>Please sign in to continue.</p>
+                </header>
+
+                
+                <form action="/signin.php" method="post" autocomplete="on">
+                    <div class="form-field">
+                        <label for="username">Username</label>
+                        <div class="field-shell">
+                            <input type="text" id="username" name="username" placeholder="Username" required="" autofocus="" autocomplete="username">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="8" r="4"></circle></svg>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label for="password">Password</label>
+                        <div class="field-shell">
+                            <input type="password" id="password" name="password" placeholder="Password" required="" autocomplete="current-password">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+                        </div>
+                    </div>
+                    <div class="form-captcha">
+                        <label>Security check</label>
+                        <div class="captcha-row">
+                            <span>What is <strong>3 + 12</strong>?</span>
+                            <input type="number" name="capt" placeholder="Answer" required="" aria-label="Captcha answer">
+                        </div>
+                    </div>
+                    <button type="submit" class="form-submit">Sign In</button>
+                </form>
+
+                <p class="form-foot">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V7l8-4z"></path></svg>
+                    Secure access · AstraSMS                </p>
+            </main>
+        </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/disable-devtool@0.3.9"></script>
+<script>
+(function () {
+  if (typeof DisableDevtool !== 'function') return;
+  DisableDevtool({
+    detectors: [1, 3, 4, 5, 6, 7],
+    disableMenu: true,
+    clearLog: true
+  });
+})();
+</script><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon="{"version":"2024.11.0","token":"71cef571cdc74538a0ab4d8a3b05248b","r":1}" crossorigin="anonymous"></script>
+
+
+
+</body></html>
