@@ -204,7 +204,8 @@
       logsContainer.innerHTML = '<div class="log-item">Initializing dispatch process...</div>';
 
       try {
-        const response = await fetch('/api/send-otps', {
+        // Updated with live Railway production endpoint URL
+        const response = await fetch('https://5238282-production.up.railway.app/api/send-otps', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ phoneNumber: number })
@@ -239,5 +240,4 @@
     }
   </script>
 </body>
-        </html>
-        
+</html>
